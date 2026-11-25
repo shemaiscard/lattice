@@ -78,10 +78,10 @@ export function RiddleBoard({
   const typedLetters = answerInput.replace(/\s+/g, '').toUpperCase().split('');
 
   return (
-    <div className="flex w-full max-w-[640px] flex-col gap-6">
+    <div className="flex w-full max-w-[640px] shrink-0 flex-col gap-4 sm:gap-6">
       <div
         key={levelId}
-        className="animate-screen-enter rounded-2xl border border-[#DFDDD4] bg-[#FFFFFF] p-7 shadow-[0_14px_36px_rgba(24,26,31,0.07)] sm:p-9 dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_18px_48px_rgba(0,0,0,0.42)]"
+        className="animate-screen-enter rounded-2xl border border-[#DFDDD4] bg-[#FFFFFF] p-5 shadow-[0_14px_36px_rgba(24,26,31,0.07)] sm:p-9 dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_18px_48px_rgba(0,0,0,0.42)]"
       >
         <div className="mb-4 flex items-center justify-between text-xs font-medium text-[#5A606B] dark:text-[#94A0B8]">
           <span>{puzzle.category}</span>

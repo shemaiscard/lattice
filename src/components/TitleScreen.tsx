@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  Download,
   Map as MapIcon,
   Moon,
   Play,
@@ -22,6 +23,8 @@ interface TitleScreenProps {
   onToggleTheme: () => void;
   onToggleSound: () => void;
   onToggleHaptics: () => void;
+  /** Set when the browser offers to install the app. */
+  onInstall?: () => void;
 }
 
 export function TitleScreen({
@@ -35,6 +38,7 @@ export function TitleScreen({
   onToggleTheme,
   onToggleSound,
   onToggleHaptics,
+  onInstall,
 }: TitleScreenProps) {
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const totals = getCampaignTotals(progress);
@@ -51,7 +55,7 @@ export function TitleScreen({
     <div
       onMouseMove={handleMouseMove}
       onMouseLeave={() => setTilt({ x: 0, y: 0 })}
-      className="relative flex min-h-screen w-full flex-col justify-between overflow-hidden bg-[#F6F5F1] text-[#181A1F] transition-colors duration-300 dark:bg-[#0D1017] dark:text-[#F3F5F8]"
+      className="relative flex min-h-dvh w-full flex-col justify-between overflow-hidden bg-[#F6F5F1] text-[#181A1F] transition-colors duration-300 dark:bg-[#0D1017] dark:text-[#F3F5F8]"
     >
       {/* Subtle Architectural Grid Hairlines */}
       <div
@@ -68,6 +72,17 @@ export function TitleScreen({
 
       {/* Top Utility Row (Compact icon buttons only, no website navbar) */}
       <div className="relative z-10 flex items-center justify-end gap-2 px-6 pt-5 sm:px-10 sm:pt-7">
+        {onInstall && (
+          <button
+            type="button"
+            onClick={onInstall}
+            aria-label="Install Lattice as an app"
+            className="inline-flex h-10 items-center gap-2 rounded-xl border border-[#DFDDD4] bg-[#FFFFFF]/90 px-3.5 text-xs font-semibold text-[#181A1F] transition-colors hover:border-[#2B4EFF] dark:border-[#273042] dark:bg-[#161B26]/90 dark:text-[#F3F5F8] dark:hover:border-[#F5A524]"
+          >
+            <Download className="h-4 w-4 text-[#2B4EFF] dark:text-[#F5A524]" />
+            <span className="whitespace-nowrap">Install</span>
+          </button>
+        )}
         <button
           type="button"
           onClick={onToggleTheme}
@@ -110,7 +125,7 @@ export function TitleScreen({
       </div>
 
       {/* Main Split Stage: Calm Negative Space Left + Interactive Dot-Link Centerpiece Right */}
-      <main className="relative z-10 mx-auto grid w-full max-w-[1180px] flex-1 grid-cols-1 items-center gap-12 px-6 py-8 lg:grid-cols-12 lg:px-10">
+      <main className="relative z-10 mx-auto grid w-full max-w-[1180px] flex-1 grid-cols-1 items-center gap-6 px-6 py-4 sm:py-8 lg:grid-cols-12 lg:gap-12 lg:px-10">
         {/* Left Region: Bespoke SVG Emblem, Display Lockup & CTAs */}
         <div className="animate-screen-enter flex flex-col items-start lg:col-span-6">
           {/* Bespoke Inline SVG Title Lockup */}
@@ -214,7 +229,7 @@ export function TitleScreen({
               transform: `translate3d(${tilt.x}px, ${tilt.y}px, 0)`,
               transition: 'transform 220ms cubic-bezier(0.16, 1, 0.3, 1)',
             }}
-            className="relative aspect-square w-full max-w-[430px] rounded-3xl border border-[#DFDDD4] bg-[#FFFFFF] p-5 shadow-[0_24px_64px_rgba(24,26,31,0.10)] dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_28px_72px_rgba(0,0,0,0.55)]"
+            className="relative aspect-square w-full max-w-[min(430px,34dvh)] rounded-3xl lg:max-w-[430px] border border-[#DFDDD4] bg-[#FFFFFF] p-5 shadow-[0_24px_64px_rgba(24,26,31,0.10)] dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_28px_72px_rgba(0,0,0,0.55)]"
           >
             <svg viewBox="0 0 400 400" className="h-full w-full" aria-hidden="true">
               {/* 4x4 tactile backdrop squares */}
@@ -305,7 +320,7 @@ export function TitleScreen({
       </main>
 
       {/* Bottom Safe-Margin Flat Control Hint */}
-      <div className="relative z-10 px-6 pb-6 text-center text-xs font-medium text-[#6B717D] dark:text-[#7E8BA3]">
+      <div className="relative z-10 px-6 pb-6 text-center text-xs font-medium [@media(pointer:coarse)]:hidden text-[#6B717D] dark:text-[#7E8BA3]">
         Drag or Click to Link Dots · Type to Solve Riddles · Enter to Start · Esc to Pause
       </div>
     </div>

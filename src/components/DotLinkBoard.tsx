@@ -391,7 +391,7 @@ export function DotLinkBoard({
   const viewBoxSize = puzzle.gridSize * gridUnit;
 
   return (
-    <div className="flex w-full max-w-[540px] flex-col items-center gap-4">
+    <div className="board-stack flex w-full max-w-[540px] flex-col items-center gap-4">
       {/* Compact Live Telemetry Strip (unboxed clean typography) */}
       <div className="flex w-full items-center justify-between px-1 text-xs font-medium text-[#5A606B] dark:text-[#94A0B8]">
         <div className="flex items-center gap-3 tabular-nums">
@@ -411,6 +411,7 @@ export function DotLinkBoard({
       </div>
 
       {/* Main Tactile Dot Link Board */}
+      <div className="board-fit">
       <div
         ref={boardRef}
         data-testid="dotlink-board"
@@ -419,7 +420,7 @@ export function DotLinkBoard({
         onPointerUp={handlePointerUp}
         onPointerCancel={handlePointerUp}
         style={{ touchAction: 'none' }}
-        className="relative aspect-square w-full select-none overflow-hidden rounded-2xl border border-[#DFDDD4] bg-[#FFFFFF] p-2.5 shadow-[0_14px_36px_rgba(24,26,31,0.08)] dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_18px_48px_rgba(0,0,0,0.45)]"
+        className="board-square relative aspect-square select-none overflow-hidden rounded-2xl border border-[#DFDDD4] bg-[#FFFFFF] p-2.5 shadow-[0_14px_36px_rgba(24,26,31,0.08)] dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_18px_48px_rgba(0,0,0,0.45)]"
       >
         {/* Grid Cells Layer */}
         <div
@@ -546,6 +547,7 @@ export function DotLinkBoard({
             );
           })}
         </svg>
+      </div>
       </div>
 
       {/* Pair Legend (accessible color + shape progress readout) */}

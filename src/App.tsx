@@ -29,6 +29,12 @@ import { PauseModal, VictoryModal } from './components/StatusModal';
 
 const THEME_STORAGE_KEY = 'lattice_theme_v1';
 
+/** Chrome and Edge fire this when the app can be installed (not in lib.dom yet). */
+interface BeforeInstallPromptEvent extends Event {
+  prompt: () => Promise<void>;
+  userChoice: Promise<{ outcome: 'accepted' | 'dismissed' }>;
+}
+
 function getInitialTheme(): ThemeMode {
   if (typeof window === 'undefined') return 'dark';
   const saved = window.localStorage.getItem(THEME_STORAGE_KEY);
@@ -63,6 +69,28 @@ export default function App() {
   const [resetToken, setResetToken] = useState(0);
   const [hintToken, setHintToken] = useState(0);
   const [runSummary, setRunSummary] = useState<RunSummary | null>(null);
+  const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
+
+  useEffect(() => {
+    const onPrompt = (e: Event) => {
+      e.preventDefault();
+      setInstallPrompt(e as BeforeInstallPromptEvent);
+    };
+    const onInstalled = () => setInstallPrompt(null);
+    window.addEventListener('beforeinstallprompt', onPrompt);
+    window.addEventListener('appinstalled', onInstalled);
+    return () => {
+      window.removeEventListener('beforeinstallprompt', onPrompt);
+      window.removeEventListener('appinstalled', onInstalled);
+    };
+  }, []);
+
+  const handleInstall = async () => {
+    if (!installPrompt) return;
+    await installPrompt.prompt();
+    await installPrompt.userChoice;
+    setInstallPrompt(null);
+  };
 
   const particlesRef = useRef<ParticleBurstHandle | null>(null);
   const currentLevel: LevelDef = getLevelById(currentLevelId) ?? LEVELS[0];
@@ -76,6 +104,9 @@ export default function App() {
     } else {
       root.classList.remove('dark');
     }
+    document
+      .querySelector('meta[name="theme-color"]')
+      ?.setAttribute('content', theme === 'dark' ? '#0D1017' : '#F6F5F1');
     try {
       window.localStorage.setItem(THEME_STORAGE_KEY, theme);
     } catch {
@@ -261,7 +292,7 @@ export default function App() {
   const recommended = getRecommendedNextLevel(progress);
 
   return (
-    <div className="min-h-screen w-full bg-[#F6F5F1] text-[#181A1F] transition-colors duration-300 dark:bg-[#0D1017] dark:text-[#F3F5F8]">
+    <div className="min-h-dvh w-full bg-[#F6F5F1] text-[#181A1F] transition-colors duration-300 dark:bg-[#0D1017] dark:text-[#F3F5F8]">
       <ParticleCanvas ref={particlesRef} />
 
       {screen === 'title' && (
@@ -281,6 +312,7 @@ export default function App() {
             onToggleTheme={handleToggleTheme}
             onToggleSound={handleToggleSound}
             onToggleHaptics={handleToggleHaptics}
+            onInstall={installPrompt ? handleInstall : undefined}
           />
         </div>
       )}
@@ -308,7 +340,7 @@ export default function App() {
       )}
 
       {(screen === 'playing' || screen === 'paused' || screen === 'victory') && (
-        <div key="arena" className="animate-screen-enter flex min-h-screen flex-col">
+        <div key="arena" className="animate-screen-enter flex h-dvh flex-col">
             <GameHud
               level={currentLevel}
               moves={moves}
@@ -335,9 +367,9 @@ export default function App() {
               onToggleHaptics={handleToggleHaptics}
             />
 
-            <main className="mx-auto flex w-full max-w-[960px] flex-1 flex-col items-center justify-center px-5 py-7 sm:py-10">
+            <main className="mx-auto flex min-h-0 w-full max-w-[960px] flex-1 flex-col items-center justify-center-safe overflow-y-auto px-5 py-5 sm:py-10">
               {/* Level Title & Subtitle Header */}
-              <div className="mb-6 text-center">
+              <div className="mb-4 shrink-0 text-center sm:mb-6">
                 <h1 className="font-[family-name:var(--font-display)] text-2xl font-bold tracking-tight text-[#181A1F] sm:text-3xl dark:text-[#F3F5F8]">
                   {currentLevel.title}
                 </h1>

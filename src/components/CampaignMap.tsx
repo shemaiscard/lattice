@@ -48,7 +48,7 @@ export function CampaignMap({
   const meta = DIFFICULTY_META[selectedDifficulty];
 
   return (
-    <div className="min-h-screen w-full bg-[#F6F5F1] text-[#181A1F] transition-colors duration-300 dark:bg-[#0D1017] dark:text-[#F3F5F8]">
+    <div className="min-h-dvh w-full bg-[#F6F5F1] text-[#181A1F] transition-colors duration-300 dark:bg-[#0D1017] dark:text-[#F3F5F8]">
       {/* Compact Game Shell Top Strip */}
       <div className="sticky top-0 z-20 border-b border-[#E2E0D8] bg-[#F6F5F1]/95 dark:border-[#212A3A] dark:bg-[#0D1017]/95">
         <div className="mx-auto flex h-16 max-w-[1140px] items-center justify-between gap-4 px-5 sm:px-8">
@@ -101,7 +101,7 @@ export function CampaignMap({
           <div
             role="tablist"
             aria-label="Difficulty modes"
-            className="inline-flex items-center gap-1 rounded-xl border border-[#DFDDD4] bg-[#ECEAE2] p-1 self-start sm:self-auto dark:border-[#252E40] dark:bg-[#141923]"
+            className="flex w-full items-center gap-1 rounded-xl border border-[#DFDDD4] bg-[#ECEAE2] p-1 sm:inline-flex sm:w-auto sm:self-auto dark:border-[#252E40] dark:bg-[#141923]"
           >
             {DIFFICULTIES.map((diff) => {
               const active = selectedDifficulty === diff;
@@ -113,14 +113,14 @@ export function CampaignMap({
                   role="tab"
                   aria-selected={active}
                   onClick={() => onSelectDifficulty(diff)}
-                  className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-semibold transition-colors whitespace-nowrap shrink-0 ${
+                  className={`flex flex-1 items-center justify-center gap-2 rounded-lg px-3 py-2 text-sm font-semibold transition-colors whitespace-nowrap sm:flex-none sm:px-4 ${
                     active
                       ? 'bg-[#FFFFFF] text-[#181A1F] shadow-sm dark:bg-[#F5A524] dark:text-[#0D1017]'
                       : 'text-[#5A606B] hover:text-[#181A1F] dark:text-[#94A0B8] dark:hover:text-[#F3F5F8]'
                   }`}
                 >
                   <span>{DIFFICULTY_META[diff].title}</span>
-                  <span className="font-mono text-xs opacity-75 tabular-nums">
+                  <span className="font-mono text-xs opacity-75 tabular-nums max-[379px]:hidden">
                     {stats.solved}/{stats.total}
                   </span>
                 </button>

@@ -4,6 +4,8 @@ Lattice is a puzzle and riddle campaign of 45 handcrafted levels. You link color
 
 **Play it:** [zelattice.netlify.app](https://zelattice.netlify.app)
 
+On a phone, tap **Install** on the title screen (or **Add to Home screen** in the browser menu). Lattice then opens full screen and works offline.
+
 ## Puzzle types
 
 | Puzzle | Goal | Levels |

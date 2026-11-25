@@ -86,7 +86,7 @@ export function LumenBoard({
   };
 
   return (
-    <div className="flex w-full max-w-[480px] flex-col items-center gap-4">
+    <div className="board-stack board-stack--lumen flex w-full max-w-[480px] flex-col items-center gap-4">
       <div className="flex w-full items-center justify-between px-1 text-xs font-medium text-[#5A606B] dark:text-[#94A0B8]">
         <span className="tabular-nums">
           Illuminated <strong className="text-[#181A1F] dark:text-[#F3F5F8]">{stats.litCount}/{stats.totalCells}</strong>
@@ -94,9 +94,10 @@ export function LumenBoard({
         <span>Tap any tile to flip it and its 4 neighbors</span>
       </div>
 
+      <div className="board-fit">
       <div
         data-testid="lumen-board"
-        className="aspect-square w-full rounded-2xl border border-[#DFDDD4] bg-[#FFFFFF] p-3.5 shadow-[0_14px_36px_rgba(24,26,31,0.08)] dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_18px_48px_rgba(0,0,0,0.45)]"
+        className="board-square aspect-square rounded-2xl border border-[#DFDDD4] bg-[#FFFFFF] p-3.5 shadow-[0_14px_36px_rgba(24,26,31,0.08)] dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_18px_48px_rgba(0,0,0,0.45)]"
       >
         <div
           className="grid h-full w-full gap-2.5"
@@ -134,6 +135,7 @@ export function LumenBoard({
             })
           )}
         </div>
+      </div>
       </div>
 
       <p className="text-center text-xs text-[#5A606B] dark:text-[#94A0B8]">

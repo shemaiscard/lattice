@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, type CSSProperties } from 'react';
 import {
   Anchor,
   Bell,
@@ -150,8 +150,13 @@ export function MemoryBoard({
 
   return (
     <div
-      className="flex w-full flex-col items-center gap-4"
-      style={{ maxWidth: Math.min(560, puzzle.cols * 96) }}
+      className="board-stack flex w-full flex-col items-center gap-4"
+      style={
+        {
+          maxWidth: Math.min(560, puzzle.cols * 96),
+          '--board-max': `calc(min(${Math.min(560, puzzle.cols * 96)}px, 100vw - 2.5rem) * ${puzzle.rows / puzzle.cols} + 2rem)`,
+        } as CSSProperties
+      }
     >
       <div className="flex w-full items-center justify-between gap-3 px-1 text-xs font-medium text-[#5A606B] dark:text-[#94A0B8]">
         <span className="tabular-nums">
@@ -165,9 +170,11 @@ export function MemoryBoard({
         </span>
       </div>
 
+      <div className="board-fit">
       <div
         data-testid="memory-board"
-        className="w-full rounded-2xl border border-[#DFDDD4] bg-[#FFFFFF] p-2.5 shadow-[0_14px_36px_rgba(24,26,31,0.08)] sm:p-3.5 dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_18px_48px_rgba(0,0,0,0.45)]"
+        style={{ '--cols': puzzle.cols, '--rows': puzzle.rows } as CSSProperties}
+        className="memory-board rounded-2xl border border-[#DFDDD4] bg-[#FFFFFF] p-2.5 shadow-[0_14px_36px_rgba(24,26,31,0.08)] sm:p-3.5 dark:border-[#273042] dark:bg-[#141923] dark:shadow-[0_18px_48px_rgba(0,0,0,0.45)]"
       >
         <div
           className="grid w-full gap-1.5 sm:gap-2.5"
@@ -236,6 +243,7 @@ export function MemoryBoard({
             );
           })}
         </div>
+      </div>
       </div>
 
       <p className="text-center text-xs text-[#5A606B] dark:text-[#94A0B8]">
