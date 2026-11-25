@@ -5,6 +5,7 @@ import type {
   DotLinkPuzzle,
   LevelDef,
   LumenPuzzle,
+  MemoryPuzzle,
   ProgressState,
   RiddlePuzzle,
   RunSummary,
@@ -352,6 +353,79 @@ export function getLumenStats(grid: boolean[][]): {
 }
 
 // ============================================================================
+// MEMORY MATCH ENGINE (Pure State Functions)
+// ============================================================================
+
+export interface MemoryState {
+  /** Symbol index for every card, row by row. */
+  deck: number[];
+  matched: boolean[];
+  /** Cards turned face up that are not matched yet (at most two). */
+  open: number[];
+}
+
+export type MemoryFlipOutcome = 'ignored' | 'first' | 'match' | 'miss';
+
+/** Every symbol twice, shuffled with Fisher-Yates. */
+export function createMemoryDeck(puzzle: MemoryPuzzle, random: () => number = Math.random): number[] {
+  const deck: number[] = [];
+  for (let s = 0; s < puzzle.pairs; s++) deck.push(s, s);
+  for (let i = deck.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  return deck;
+}
+
+export function createMemoryState(puzzle: MemoryPuzzle, random: () => number = Math.random): MemoryState {
+  const deck = createMemoryDeck(puzzle, random);
+  return { deck, matched: deck.map(() => false), open: [] };
+}
+
+/**
+ * Turn one card over. Turning a third card while a missed pair is still showing
+ * hides that pair first, so play never has to wait for the cards to flip back.
+ */
+export function flipMemoryCard(
+  state: MemoryState,
+  index: number
+): { state: MemoryState; outcome: MemoryFlipOutcome } {
+  if (index < 0 || index >= state.deck.length || state.matched[index] || state.open.includes(index)) {
+    return { state, outcome: 'ignored' };
+  }
+  const open = state.open.length === 2 ? [] : state.open;
+  if (open.length === 0) {
+    return { state: { ...state, open: [index] }, outcome: 'first' };
+  }
+  const first = open[0];
+  if (state.deck[first] === state.deck[index]) {
+    const matched = state.matched.slice();
+    matched[first] = true;
+    matched[index] = true;
+    return { state: { ...state, matched, open: [] }, outcome: 'match' };
+  }
+  return { state: { ...state, open: [first, index] }, outcome: 'miss' };
+}
+
+export function hideMemoryMiss(state: MemoryState): MemoryState {
+  return state.open.length === 2 ? { ...state, open: [] } : state;
+}
+
+export function getMemoryStats(state: MemoryState): {
+  pairsFound: number;
+  totalPairs: number;
+  isSolved: boolean;
+} {
+  const matchedCards = state.matched.filter(Boolean).length;
+  const totalPairs = state.deck.length / 2;
+  return {
+    pairsFound: matchedCards / 2,
+    totalPairs,
+    isSolved: matchedCards === state.deck.length,
+  };
+}
+
+// ============================================================================
 // PROGRESSION, UNLOCKING & SCORING
 // ============================================================================
 
@@ -382,7 +456,7 @@ export function calculateStars(
   hintsUsed: number
 ): 1 | 2 | 3 {
   if (hintsUsed >= 2) return 1;
-  if (level.puzzle.type === 'dotlink' || level.puzzle.type === 'lumen') {
+  if (level.puzzle.type === 'dotlink' || level.puzzle.type === 'lumen' || level.puzzle.type === 'memory') {
     const par = level.puzzle.parMoves;
     if (hintsUsed === 0 && moves <= par + 2) return 3;
     if (hintsUsed <= 1 && moves <= par + 6) return 2;

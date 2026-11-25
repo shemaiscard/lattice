@@ -1,6 +1,6 @@
 # Lattice
 
-Lattice is a puzzle and riddle campaign of 36 handcrafted levels. You link colored dots across a grid, light up a field of tiles, crack riddles and break number ciphers across three difficulties and nine stages.
+Lattice is a puzzle and riddle campaign of 45 handcrafted levels. You link colored dots across a grid, light up a field of tiles, crack riddles, break number ciphers and match hidden pairs across three difficulties and nine stages.
 
 **Play it:** [zelattice.netlify.app](https://zelattice.netlify.app)
 
@@ -12,11 +12,13 @@ Lattice is a puzzle and riddle campaign of 36 handcrafted levels. You link color
 | Riddle Vault | Type the answer to a lateral riddle, with up to two clues | 12 |
 | Lumen | Tap tiles to toggle them and their neighbors until the whole grid is lit | 6 |
 | Cipher | Find the rule behind a sequence and pick the missing value | 3 |
+| Memory Match | Turn over two cards at a time until every pair is found. On Hard, all symbols share one color | 9 |
 
 ## How it plays
 
 - Easy, Medium and Hard are open from the start. Inside each one, levels and stages unlock in order.
 - Each level earns one to three stars based on your moves against par and the hints you used.
+- Every stage ends with a Memory Match board, from 3 x 4 on Easy to 6 x 6 on Hard. Cards are reshuffled on each attempt, and the hint shows every card for a moment.
 - Best results, streaks and the light or dark theme are saved in the browser.
 - Sound effects and haptic feedback on phones that support vibration.
 

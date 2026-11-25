@@ -4,13 +4,19 @@ import { LEVELS, getLevelsByDifficulty, getLevelsByStage } from './levels';
 import {
   INITIAL_PROGRESS,
   applyDotLinkHint,
+  calculateStars,
   coordKey,
   coordsEqual,
   createInitialLumenGrid,
+  createMemoryDeck,
+  createMemoryState,
   evaluateRiddleAnswer,
+  flipMemoryCard,
   getCampaignTotals,
   getDotLinkStats,
   getLumenStats,
+  getMemoryStats,
+  hideMemoryMiss,
   isLevelUnlocked,
   isOrthogonallyAdjacent,
   recordLevelCompletion,
@@ -20,13 +26,15 @@ import {
   type DotLinkPaths,
 } from './engine';
 
-test('campaign structure has 3 difficulties × 3 stages × 4 levels = 36 levels', () => {
-  assert.equal(LEVELS.length, 36);
+test('campaign structure has 3 difficulties × 3 stages × 5 levels = 45 levels', () => {
+  assert.equal(LEVELS.length, 45);
   for (const diff of ['easy', 'medium', 'hard'] as const) {
-    assert.equal(getLevelsByDifficulty(diff).length, 12);
+    assert.equal(getLevelsByDifficulty(diff).length, 15);
     for (const stage of [1, 2, 3]) {
       const stageLevels = getLevelsByStage(diff, stage);
-      assert.equal(stageLevels.length, 4, `${diff} stage ${stage} should have 4 levels`);
+      assert.equal(stageLevels.length, 5, `${diff} stage ${stage} should have 5 levels`);
+      assert.deepEqual(stageLevels.map((l) => l.level), [1, 2, 3, 4, 5]);
+      assert.equal(stageLevels[4].puzzle.type, 'memory', `${diff} stage ${stage} should end with Memory Match`);
       // Every stage must include at least one Dot Link and one Riddle
       assert.ok(
         stageLevels.some((l) => l.puzzle.type === 'dotlink'),
@@ -184,6 +192,78 @@ test('every Cipher Lock puzzle includes its correct answer in options', () => {
     if (level.puzzle.type !== 'cipher') continue;
     assert.ok(level.puzzle.options.includes(level.puzzle.correctAnswer));
   }
+});
+
+test('every Memory Match board has an even card count and fits the symbol set', () => {
+  const boards = LEVELS.filter((l) => l.puzzle.type === 'memory');
+  assert.equal(boards.length, 9);
+  for (const level of boards) {
+    if (level.puzzle.type !== 'memory') continue;
+    const { rows, cols, pairs, parMoves, monochrome } = level.puzzle;
+    assert.equal(rows * cols, pairs * 2, `${level.id} needs rows * cols = pairs * 2`);
+    assert.ok(pairs <= 18, `${level.id} uses more symbols than the board has`);
+    assert.ok(parMoves >= pairs, `${level.id} par cannot beat a perfect run`);
+    assert.equal(monochrome, level.difficulty === 'hard', `${level.id} monochrome only on Hard`);
+  }
+});
+
+test('Memory Match deck holds every symbol exactly twice', () => {
+  for (const level of LEVELS) {
+    if (level.puzzle.type !== 'memory') continue;
+    const deck = createMemoryDeck(level.puzzle);
+    assert.equal(deck.length, level.puzzle.rows * level.puzzle.cols);
+    const counts = new Map<number, number>();
+    for (const s of deck) counts.set(s, (counts.get(s) ?? 0) + 1);
+    assert.equal(counts.size, level.puzzle.pairs);
+    for (const n of counts.values()) assert.equal(n, 2);
+  }
+});
+
+test('Memory Match flips: first card, miss, match, ignored cards and solve', () => {
+  const level = LEVELS.find((l) => l.id === 'easy-s1-l5')!;
+  assert.equal(level.puzzle.type, 'memory');
+  if (level.puzzle.type !== 'memory') return;
+  let state = createMemoryState(level.puzzle);
+  state = { ...state, deck: [0, 1, 0, 1, 2, 3, 2, 3, 4, 5, 4, 5] };
+
+  let r = flipMemoryCard(state, 0);
+  assert.equal(r.outcome, 'first');
+  assert.equal(flipMemoryCard(r.state, 0).outcome, 'ignored', 'same card twice');
+
+  r = flipMemoryCard(r.state, 1);
+  assert.equal(r.outcome, 'miss');
+  assert.deepEqual(r.state.open, [0, 1]);
+  assert.deepEqual(hideMemoryMiss(r.state).open, []);
+
+  // A third card while a miss is showing hides the miss and starts a new attempt.
+  r = flipMemoryCard(r.state, 2);
+  assert.equal(r.outcome, 'first');
+  assert.deepEqual(r.state.open, [2]);
+
+  r = flipMemoryCard(r.state, 0);
+  assert.equal(r.outcome, 'match');
+  assert.ok(r.state.matched[0] && r.state.matched[2]);
+  assert.equal(flipMemoryCard(r.state, 0).outcome, 'ignored', 'matched card');
+
+  state = r.state;
+  for (const [a, b] of [[1, 3], [4, 6], [5, 7], [8, 10], [9, 11]]) {
+    state = flipMemoryCard(state, a).state;
+    const m = flipMemoryCard(state, b);
+    assert.equal(m.outcome, 'match');
+    state = m.state;
+  }
+  assert.deepEqual(getMemoryStats(state), { pairsFound: 6, totalPairs: 6, isSolved: true });
+});
+
+test('Memory Match stars follow par like Dot Link and Lumen', () => {
+  const level = LEVELS.find((l) => l.id === 'easy-s1-l5')!;
+  if (level.puzzle.type !== 'memory') return;
+  const par = level.puzzle.parMoves;
+  assert.equal(calculateStars(level, par + 2, 0), 3);
+  assert.equal(calculateStars(level, par + 3, 0), 2);
+  assert.equal(calculateStars(level, par + 6, 1), 2);
+  assert.equal(calculateStars(level, par + 7, 0), 1);
+  assert.equal(calculateStars(level, par, 2), 1);
 });
 
 test('progression unlocks Stage 1 Level 1 of each tier and unlocks sequential levels on completion', () => {

@@ -160,7 +160,7 @@ export function TitleScreen({
           </div>
 
           <p className="max-w-lg text-lg leading-relaxed text-[#4B515C] text-balance sm:text-xl dark:text-[#A4B0C6]">
-            Connect luminous dot circuits, crack lateral riddles, and illuminate ancient logic grids across 36 handcrafted levels.
+            Connect luminous dot circuits, crack lateral riddles, illuminate ancient logic grids and match hidden pairs across 45 handcrafted levels.
           </p>
 
           {/* Clean Unboxed Campaign Summary */}

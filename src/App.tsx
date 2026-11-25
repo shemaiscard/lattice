@@ -23,6 +23,7 @@ import { GameHud } from './components/GameHud';
 import { DotLinkBoard } from './components/DotLinkBoard';
 import { RiddleBoard } from './components/RiddleBoard';
 import { LumenBoard } from './components/LumenBoard';
+import { MemoryBoard } from './components/MemoryBoard';
 import { CipherBoard } from './components/CipherBoard';
 import { PauseModal, VictoryModal } from './components/StatusModal';
 
@@ -371,6 +372,18 @@ export default function App() {
 
               {currentLevel.puzzle.type === 'lumen' && (
                 <LumenBoard
+                  levelId={currentLevel.id}
+                  puzzle={currentLevel.puzzle}
+                  resetToken={resetToken}
+                  hintToken={hintToken}
+                  onMove={() => setMoves((m) => m + 1)}
+                  onSolved={handleLevelSolved}
+                  onBurst={handleBurst}
+                />
+              )}
+
+              {currentLevel.puzzle.type === 'memory' && (
+                <MemoryBoard
                   levelId={currentLevel.id}
                   puzzle={currentLevel.puzzle}
                   resetToken={resetToken}

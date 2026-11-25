@@ -1,6 +1,6 @@
 export type Difficulty = 'easy' | 'medium' | 'hard';
 
-export type PuzzleType = 'dotlink' | 'riddle' | 'lumen' | 'cipher';
+export type PuzzleType = 'dotlink' | 'riddle' | 'lumen' | 'cipher' | 'memory';
 
 export type GameScreen = 'title' | 'map' | 'playing' | 'paused' | 'victory';
 
@@ -63,13 +63,25 @@ export interface CipherPuzzle {
   explanation: string;
 }
 
-export type PuzzlePayload = DotLinkPuzzle | RiddlePuzzle | LumenPuzzle | CipherPuzzle;
+export interface MemoryPuzzle {
+  type: 'memory';
+  rows: number;
+  cols: number;
+  /** Distinct symbols on the board. Each appears twice, so rows * cols = pairs * 2. */
+  pairs: number;
+  /** Draw every symbol in one color, so only the shape tells two cards apart. */
+  monochrome: boolean;
+  /** Pair attempts (two cards turned over) a sharp memory needs. */
+  parMoves: number;
+}
+
+export type PuzzlePayload = DotLinkPuzzle | RiddlePuzzle | LumenPuzzle | CipherPuzzle | MemoryPuzzle;
 
 export interface LevelDef {
   id: string;
   difficulty: Difficulty;
   stage: number; // 1, 2, 3
-  level: number; // 1, 2, 3, 4
+  level: number; // 1 to 5
   title: string;
   subtitle: string;
   puzzle: PuzzlePayload;

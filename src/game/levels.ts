@@ -122,6 +122,22 @@ export const LEVELS: LevelDef[] = [
       ],
     },
   },
+  {
+    id: 'easy-s1-l5',
+    difficulty: 'easy',
+    stage: 1,
+    level: 5,
+    title: 'Twin Sparks',
+    subtitle: 'Turn two cards at a time and find every matching pair.',
+    puzzle: {
+      type: 'memory',
+      rows: 3,
+      cols: 4,
+      pairs: 6,
+      monochrome: false,
+      parMoves: 11,
+    },
+  },
 
   // =========================================================================
   // EASY: STAGE 2
@@ -211,6 +227,22 @@ export const LEVELS: LevelDef[] = [
       ],
     },
   },
+  {
+    id: 'easy-s2-l5',
+    difficulty: 'easy',
+    stage: 2,
+    level: 5,
+    title: 'Courtyard Stones',
+    subtitle: 'Eight pairs hide under the courtyard stones.',
+    puzzle: {
+      type: 'memory',
+      rows: 4,
+      cols: 4,
+      pairs: 8,
+      monochrome: false,
+      parMoves: 14,
+    },
+  },
 
   // =========================================================================
   // EASY: STAGE 3
@@ -289,6 +321,22 @@ export const LEVELS: LevelDef[] = [
       explanation: 'A keyboard has keys, a space bar, and an Enter key.',
     },
   },
+  {
+    id: 'easy-s3-l5',
+    difficulty: 'easy',
+    stage: 3,
+    level: 5,
+    title: 'Lantern Pairs',
+    subtitle: 'Every lantern has a twin somewhere in the dark.',
+    puzzle: {
+      type: 'memory',
+      rows: 4,
+      cols: 5,
+      pairs: 10,
+      monochrome: false,
+      parMoves: 18,
+    },
+  },
 
   // =========================================================================
   // MEDIUM: STAGE 1
@@ -365,6 +413,22 @@ export const LEVELS: LevelDef[] = [
         makePair('amber', [[1,4],[1,3],[2,3],[2,4],[3,4],[3,3],[3,2],[4,2],[4,3]]),
         makePair('violet', [[5,1],[5,2],[5,3],[5,4],[5,5]]),
       ],
+    },
+  },
+  {
+    id: 'medium-s1-l5',
+    difficulty: 'medium',
+    stage: 1,
+    level: 5,
+    title: 'Cloister Echoes',
+    subtitle: 'Ten echoes, and each one is answered exactly once.',
+    puzzle: {
+      type: 'memory',
+      rows: 4,
+      cols: 5,
+      pairs: 10,
+      monochrome: false,
+      parMoves: 17,
     },
   },
 
@@ -458,6 +522,22 @@ export const LEVELS: LevelDef[] = [
       ],
     },
   },
+  {
+    id: 'medium-s2-l5',
+    difficulty: 'medium',
+    stage: 2,
+    level: 5,
+    title: 'Star Charts',
+    subtitle: 'Pair up twelve charts before the night ends.',
+    puzzle: {
+      type: 'memory',
+      rows: 4,
+      cols: 6,
+      pairs: 12,
+      monochrome: false,
+      parMoves: 21,
+    },
+  },
 
   // =========================================================================
   // MEDIUM: STAGE 3
@@ -535,6 +615,22 @@ export const LEVELS: LevelDef[] = [
       answer: 'Hole',
       acceptedAnswers: ['hole', 'a hole'],
       explanation: 'Removing material enlarges a hole, and carving a hole into a barrel reduces its weight.',
+    },
+  },
+  {
+    id: 'medium-s3-l5',
+    difficulty: 'medium',
+    stage: 3,
+    level: 5,
+    title: 'Sundial Shadows',
+    subtitle: 'Fifteen pairs. Remember where each shadow fell.',
+    puzzle: {
+      type: 'memory',
+      rows: 5,
+      cols: 6,
+      pairs: 15,
+      monochrome: false,
+      parMoves: 26,
     },
   },
 
@@ -620,6 +716,22 @@ export const LEVELS: LevelDef[] = [
         makePair('violet', [[4,1],[5,1],[6,1],[6,2],[5,2],[4,2],[4,3],[5,3]]),
         makePair('cyan', [[6,3],[6,4],[5,4],[5,5],[6,5],[6,6],[5,6]]),
       ],
+    },
+  },
+  {
+    id: 'hard-s1-l5',
+    difficulty: 'hard',
+    stage: 1,
+    level: 5,
+    title: 'Citadel Seals',
+    subtitle: 'Every seal is cast in the same ink. Only the shape gives it away.',
+    puzzle: {
+      type: 'memory',
+      rows: 4,
+      cols: 6,
+      pairs: 12,
+      monochrome: true,
+      parMoves: 21,
     },
   },
 
@@ -714,6 +826,22 @@ export const LEVELS: LevelDef[] = [
       ],
     },
   },
+  {
+    id: 'hard-s2-l5',
+    difficulty: 'hard',
+    stage: 2,
+    level: 5,
+    title: 'Vault Ledger',
+    subtitle: 'Fifteen pairs in one color. Trust your memory, not your eyes.',
+    puzzle: {
+      type: 'memory',
+      rows: 5,
+      cols: 6,
+      pairs: 15,
+      monochrome: true,
+      parMoves: 26,
+    },
+  },
 
   // =========================================================================
   // HARD: STAGE 3
@@ -797,6 +925,22 @@ export const LEVELS: LevelDef[] = [
       answer: 'Joke',
       acceptedAnswers: ['joke', 'a joke'],
       explanation: 'A joke can be cracked, made, told, and played.',
+    },
+  },
+  {
+    id: 'hard-s3-l5',
+    difficulty: 'hard',
+    stage: 3,
+    level: 5,
+    title: 'Sovereign\'s Hall',
+    subtitle: 'The final hall: eighteen pairs in a single shade.',
+    puzzle: {
+      type: 'memory',
+      rows: 6,
+      cols: 6,
+      pairs: 18,
+      monochrome: true,
+      parMoves: 32,
     },
   },
 ];

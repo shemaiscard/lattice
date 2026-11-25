@@ -1,6 +1,7 @@
 import {
   ArrowLeft,
   Check,
+  Copy,
   KeyRound,
   Lock,
   Moon,
@@ -29,6 +30,7 @@ const PUZZLE_TYPE_META: Record<PuzzleType, { label: string; Icon: typeof Network
   riddle: { label: 'Riddle', Icon: ScrollText },
   lumen: { label: 'Lumen Grid', Icon: Sparkles },
   cipher: { label: 'Cipher Lock', Icon: KeyRound },
+  memory: { label: 'Memory Match', Icon: Copy },
 };
 
 const DIFFICULTIES: Difficulty[] = ['easy', 'medium', 'hard'];
@@ -144,7 +146,7 @@ export function CampaignMap({
                   </span>
                 </div>
 
-                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                   {stageLevels.map((lvl, idx) => {
                     const unlocked = isLevelUnlocked(lvl, progress);
                     const rec = progress.records[lvl.id];
@@ -194,6 +196,14 @@ export function CampaignMap({
                                 <span aria-hidden="true">·</span>
                                 <span className="tabular-nums">
                                   {lvl.puzzle.gridSize}×{lvl.puzzle.gridSize}
+                                </span>
+                              </>
+                            )}
+                            {lvl.puzzle.type === 'memory' && (
+                              <>
+                                <span aria-hidden="true">·</span>
+                                <span className="tabular-nums">
+                                  {lvl.puzzle.cols}×{lvl.puzzle.rows}
                                 </span>
                               </>
                             )}
