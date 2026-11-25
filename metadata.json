@@ -1,6 +1,0 @@
-{
-  "name": "LATTICE — Puzzles & Riddles",
-  "description": "A tactile puzzle and riddle campaign featuring Dot Link grids, Riddle Vaults, Lumen constellations, and Cipher locks across Easy, Medium, and Hard stages with Light & Dark themes, haptics, and fluid animations.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
-}

@@ -92,7 +92,7 @@ export function CampaignMap({
               {meta.title} Mode
             </h2>
             <p className="mt-1.5 text-sm text-[#5A606B] dark:text-[#94A0B8]">
-              {meta.subtitle} — Complete levels in order to unlock deeper stages.
+              {meta.subtitle}. Complete levels in order to unlock deeper stages.
             </p>
           </div>
 

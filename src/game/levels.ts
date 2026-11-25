@@ -48,7 +48,7 @@ export const DIFFICULTY_META: Record<
 
 export const LEVELS: LevelDef[] = [
   // =========================================================================
-  // EASY — STAGE 1
+  // EASY: STAGE 1
   // =========================================================================
   {
     id: 'easy-s1-l1',
@@ -124,7 +124,7 @@ export const LEVELS: LevelDef[] = [
   },
 
   // =========================================================================
-  // EASY — STAGE 2
+  // EASY: STAGE 2
   // =========================================================================
   {
     id: 'easy-s2-l1',
@@ -213,7 +213,7 @@ export const LEVELS: LevelDef[] = [
   },
 
   // =========================================================================
-  // EASY — STAGE 3
+  // EASY: STAGE 3
   // =========================================================================
   {
     id: 'easy-s3-l1',
@@ -291,7 +291,7 @@ export const LEVELS: LevelDef[] = [
   },
 
   // =========================================================================
-  // MEDIUM — STAGE 1
+  // MEDIUM: STAGE 1
   // =========================================================================
   {
     id: 'medium-s1-l1',
@@ -369,7 +369,7 @@ export const LEVELS: LevelDef[] = [
   },
 
   // =========================================================================
-  // MEDIUM — STAGE 2
+  // MEDIUM: STAGE 2
   // =========================================================================
   {
     id: 'medium-s2-l1',
@@ -460,7 +460,7 @@ export const LEVELS: LevelDef[] = [
   },
 
   // =========================================================================
-  // MEDIUM — STAGE 3
+  // MEDIUM: STAGE 3
   // =========================================================================
   {
     id: 'medium-s3-l1',
@@ -539,7 +539,7 @@ export const LEVELS: LevelDef[] = [
   },
 
   // =========================================================================
-  // HARD — STAGE 1
+  // HARD: STAGE 1
   // =========================================================================
   {
     id: 'hard-s1-l1',
@@ -579,7 +579,7 @@ export const LEVELS: LevelDef[] = [
       ],
       answer: 'Time',
       acceptedAnswers: ['time'],
-      explanation: 'Nothing escapes time—it erodes stone, rusts iron, and outlasts every living thing.',
+      explanation: 'Nothing escapes time: it erodes stone, rusts iron, and outlasts every living thing.',
     },
   },
   {
@@ -624,7 +624,7 @@ export const LEVELS: LevelDef[] = [
   },
 
   // =========================================================================
-  // HARD — STAGE 2
+  // HARD: STAGE 2
   // =========================================================================
   {
     id: 'hard-s2-l1',
@@ -687,7 +687,7 @@ export const LEVELS: LevelDef[] = [
       options: ['143', '168', '195', '224'],
       correctAnswer: '168',
       clues: [
-        'Add 1 to each number: 4, 9, 25, 49, 121 — those are 2², 3², 5², 7², 11².',
+        'Add 1 to each number: 4, 9, 25, 49, 121. Those are 2², 3², 5², 7², 11².',
         'The next prime after 11 is 13. Compute 13² − 1.',
       ],
       explanation: 'The sequence is p² − 1 for primes 2, 3, 5, 7, 11, 13. Thus 13² − 1 = 169 − 1 = 168.',
@@ -716,7 +716,7 @@ export const LEVELS: LevelDef[] = [
   },
 
   // =========================================================================
-  // HARD — STAGE 3
+  // HARD: STAGE 3
   // =========================================================================
   {
     id: 'hard-s3-l1',
@@ -789,7 +789,7 @@ export const LEVELS: LevelDef[] = [
     puzzle: {
       type: 'riddle',
       category: 'Grand Finale Riddle',
-      prompt: 'I can be cracked, made, told, and played. Yet even in silence, a clever mind keeps me inside a lock or a laugh. Wait—I have no lock of iron, only wit. What am I?',
+      prompt: 'I can be cracked, made, told, and played. Yet even in silence, a clever mind keeps me inside a lock or a laugh. Wait, I have no lock of iron, only wit. What am I?',
       clues: [
         'You tell me to friends to make them smile.',
         'Four letters, starting with J.',

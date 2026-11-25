@@ -66,7 +66,7 @@ export function TitleScreen({
         }}
       />
 
-      {/* Top Utility Row (Compact icon buttons only — no website navbar) */}
+      {/* Top Utility Row (Compact icon buttons only, no website navbar) */}
       <div className="relative z-10 flex items-center justify-end gap-2 px-6 pt-5 sm:px-10 sm:pt-7">
         <button
           type="button"

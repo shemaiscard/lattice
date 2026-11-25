@@ -163,7 +163,7 @@ export function CipherBoard({
             role="status"
             className="mt-4 text-sm font-medium text-emerald-700 dark:text-emerald-300"
           >
-            Lock opened — {puzzle.explanation}
+            Lock opened: {puzzle.explanation}
           </p>
         )}
       </div>
